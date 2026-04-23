@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "title": "Webpack/Vite 前端工程化模拟面试",
+    "totalQuestions": 8,
+    "tags": ["webpack", "vite", "前端工程化"]
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "type": "choice",
+      "category": "架构对比",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "关于 Webpack 和 Vite 的核心架构差异，以下哪个说法最准确？",
+      "options": [
+        { "key": "A", "text": "Vite 不做任何编译，直接让浏览器运行源码" },
+        { "key": "B", "text": "Webpack 是 Bundle 模式，Vite 开发时是 Bundleless 模式" },
+        { "key": "C", "text": "Vite 用 esbuild 全量打包" },
+        { "key": "D", "text": "架构没有本质区别，Vite 快因为用了 Rust" }
+      ],
+      "answer": "B",
+      "explanation": "Bundle vs Bundleless + 浏览器原生 ESM 按需加载"
+    },
+    {
+      "id": "q02",
+      "type": "choice",
+      "category": "HMR",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "Webpack HMR 的工作方式，以下哪个说法是正确的？",
+      "options": [
+        { "key": "A", "text": "HMR 就是自动刷新页面" },
+        { "key": "B", "text": "HMR 只替换变更模块，不刷新整个页面" },
+        { "key": "C", "text": "HMR 需要全量重打包" },
+        { "key": "D", "text": "HMR 用 XHR 拉取 patch" }
+      ],
+      "answer": "B",
+      "explanation": "HMR 通过 WebSocket 通知，增量编译后只替换变更模块"
+    },
+    {
+      "id": "q03",
+      "type": "choice",
+      "category": "Tree-shaking",
+      "lifecycle": { "stage": "adopted" },
+      "stem": "关于 Webpack 的 Tree-shaking，以下哪个说法是正确的？",
+      "options": [
+        { "key": "A", "text": "Tree-shaking 在 Make 阶段执行" },
+        { "key": "B", "text": "Tree-shaking 在 Seal 阶段执行，遍历 ModuleGraph 标记未使用的 export" },
+        { "key": "C", "text": "Tree-shaking 只对 CommonJS 模块有效" },
+        { "key": "D", "text": "设置 sideEffects: false 就能保证所有无用代码被移除" }
+      ],
+      "answer": "B",
+      "explanation": "Seal 阶段遍历 ModuleGraph 做 usedExports 标记，物理删除由 Terser 负责"
+    },
+    {
+      "id": "q04",
+      "type": "open",
+      "category": "架构对比",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "请你用自己的话解释：为什么 Vite 开发模式下比 Webpack 快？从架构层面说明原因。"
+    },
+    {
+      "id": "q05",
+      "type": "choice",
+      "category": "构建优化",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "Webpack 持久化缓存（v5）的配置方式是？",
+      "options": [
+        { "key": "A", "text": "设置 cache: true" },
+        { "key": "B", "text": "设置 cache: { type: 'filesystem' }" },
+        { "key": "C", "text": "安装 cache-loader" },
+        { "key": "D", "text": "配置 hard-source-webpack-plugin" }
+      ],
+      "answer": "B",
+      "explanation": "v5 原生支持 filesystem 缓存，cache-loader 和 hard-source 已废弃"
+    },
+    {
+      "id": "q06",
+      "type": "choice",
+      "category": "构建优化",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "一个大型 Webpack 项目打包需要 5 分钟，最关键的第一个步骤是？",
+      "options": [
+        { "key": "A", "text": "先开启持久化缓存，这是最通用的提速手段" },
+        { "key": "B", "text": "先用 speed-measure-webpack-plugin 定位瓶颈，再针对性优化" },
+        { "key": "C", "text": "直接换成 Vite，从架构层面解决" },
+        { "key": "D", "text": "先拆分 entry，减少单次打包体积" }
+      ],
+      "answer": "B",
+      "explanation": "先量化再优化，避免盲目优化。SMP 定位瓶颈后再选方案"
+    },
+    {
+      "id": "q07",
+      "type": "choice",
+      "category": "HMR",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "Vite 的 HMR 边界判定与 Webpack 的核心区别是什么？",
+      "options": [
+        { "key": "A", "text": "Vite 不需要 HMR 边界，总是整页刷新" },
+        { "key": "B", "text": "Vite 沿依赖图向上寻找最近接受更新的模块作为 HMR 边界" },
+        { "key": "C", "text": "Vite 只对 CSS 做 HMR，JS 总是全量替换" },
+        { "key": "D", "text": "两者没有区别，都是模块级替换" }
+      ],
+      "answer": "B",
+      "explanation": "Vite 基于 ESM 依赖图向上冒泡找 accept 边界，Webpack 基于 module.hot.accept 显式声明"
+    },
+    {
+      "id": "q08",
+      "type": "open",
+      "category": "构建优化",
+      "lifecycle": { "stage": "dominant" },
+      "stem": "如果给你一个体积庞大的老 Webpack 项目，打包需要 5 分钟，让你去做构建提效，你会从哪些维度排查和优化？请尽可能详细地描述你的思路。"
+    }
+  ]
+}

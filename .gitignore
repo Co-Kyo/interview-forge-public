@@ -1,0 +1,10 @@
+node_modules/
+dist/
+opensourceInfo/
+*.log
+.DS_Store
+data/result-*.json
+package-lock.json
+.env
+.env.local
+.env.*.local
